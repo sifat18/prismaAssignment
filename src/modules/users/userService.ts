@@ -28,3 +28,24 @@ export const getSingleUserService = async (
     const {password,...rest} = user;
     return rest;
   };
+
+  // update
+export const updateUserService = async (
+    id: string,
+    payload: Partial<User>
+  ): Promise<User | null> => {
+    const isExist = await getSingleUserService(id);
+  
+    if (!isExist) {
+      throw new APIError(404, "User not found !");
+    }
+  
+    const result = await prisma.user.update({
+        where: {
+            id
+        },
+        data: payload,
+       
+    });
+    return result;
+  };
