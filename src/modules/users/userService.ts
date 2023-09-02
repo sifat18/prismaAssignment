@@ -15,3 +15,16 @@ export const getAllUserService = async (): Promise<User[] | null> => {
 
 return result;
 }
+
+// single
+export const getSingleUserService = async (
+    id: string
+  ): Promise<Partial<User> | null> => {
+    const user = await prisma.user.findUnique({
+        where: {
+            id:id
+        }
+    });
+    const {password,...rest} = user;
+    return rest;
+  };

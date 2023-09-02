@@ -1,7 +1,7 @@
 import { Request, RequestHandler, Response } from "express";
 import catchAsync from "../../shared/catchAsync";
 import {
-  getAllUserService,
+  getAllUserService, getSingleUserService,
 } from "./userService";
 import reponseFormat from "../../shared/responseFormat";
 import { User } from "@prisma/client";
@@ -19,3 +19,18 @@ export const getAllUser: RequestHandler = catchAsync(
     });
   }
 );
+
+// single user
+export const getSingleUser = catchAsync(async (req: Request, res: Response) => {
+    const { id } = req.params;
+  console.log({id})
+    const result = await getSingleUserService(id);
+  
+    reponseFormat<Partial<User>>(res, {
+      statusCode: 200,
+      success: true,
+      message: "User retrieved successfully",
+      data: result,
+    });
+  });
+  
