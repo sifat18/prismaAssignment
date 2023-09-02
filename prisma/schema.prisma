@@ -1,0 +1,95 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String @id @default(uuid())
+  name         String
+  email        String @unique
+  password     String
+  role         Roles? @default(customer)
+  contactNo    String
+  profileImage String
+  address      String
+
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  ReviewAndRating ReviewAndRating[]
+  Order           Order[]
+
+  @@map("users")
+}
+
+model Category {
+  id    String @id @default(uuid())
+  title String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Book      Book[]
+
+  @@map("categories")
+}
+
+model Book {
+  id              String            @id @default(uuid())
+  title           String
+  author          String
+  price           Float
+  genre           String
+  publicationDate String
+  category        Category          @relation(fields: [categoryId], references: [id])
+  categoryId      String
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  ReviewAndRating ReviewAndRating[]
+
+  @@map("books")
+}
+
+model Order {
+  id     String       @id @default(uuid())
+  userId String
+  user   User         @relation(fields: [userId], references: [id])
+  status Orderstatus? @default(pending)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("orders")
+}
+
+model ReviewAndRating {
+  id     String @id @default(uuid())
+  review String
+  rating Int
+  userId String
+  bookId String
+
+  user User @relation(fields: [userId], references: [id])
+  book Book @relation(fields: [bookId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("reviews")
+}
+
+enum Roles {
+  admin
+  customer
+}
+
+enum Orderstatus {
+  pending
+  shipped
+  delivered
+}
