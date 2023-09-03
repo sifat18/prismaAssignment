@@ -54,7 +54,7 @@ const {orderId}=req.params
       reponseFormat<Order>(res, {
         statusCode: 200,
         success: true,
-        message: "Orders retrieved successfully",
+        message: "Order fetched successfully",
         data: result,
       });
     }
