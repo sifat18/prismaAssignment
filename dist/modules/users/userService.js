@@ -27,6 +27,7 @@ exports.deleteUserService = exports.updateUserService = exports.getSingleUserSer
 const APIError_1 = __importDefault(require("../../errorHelpers/APIError"));
 const prisma_1 = __importDefault(require("../../shared/prisma"));
 // getting all
+// ommit a field in from a interface
 const getAllUserService = () => __awaiter(void 0, void 0, void 0, function* () {
     const allUsers = yield prisma_1.default.user.findMany({});
     const result = allUsers.map((_a) => {
@@ -37,13 +38,15 @@ const getAllUserService = () => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.getAllUserService = getAllUserService;
 // single
-const getSingleUserService = (id) => __awaiter(void 0, void 0, void 0, function* () {
+const getSingleUserService = (id
+// ): Promise<Partial<User> | null> => {
+) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield prisma_1.default.user.findUnique({
         where: {
-            id: id
-        }
+            id: id,
+        },
     });
-    const { password } = user, rest = __rest(user, ["password"]);
+    const _a = user || {}, { password } = _a, rest = __rest(_a, ["password"]);
     return rest;
 });
 exports.getSingleUserService = getSingleUserService;
@@ -55,7 +58,7 @@ const updateUserService = (id, payload) => __awaiter(void 0, void 0, void 0, fun
     }
     const result = yield prisma_1.default.user.update({
         where: {
-            id
+            id,
         },
         data: payload,
     });
@@ -66,7 +69,7 @@ exports.updateUserService = updateUserService;
 const deleteUserService = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield prisma_1.default.user.delete({
         where: {
-            id
+            id,
         },
     });
     return result;

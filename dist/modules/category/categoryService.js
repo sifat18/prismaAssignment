@@ -36,11 +36,11 @@ exports.getAllCategories = getAllCategories;
 const getCategoryService = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield prisma_1.default.category.findUnique({
         where: {
-            id: id
+            id: id,
         },
         include: {
-            Book: true
-        }
+            Book: true,
+        },
     });
     return result;
 });
@@ -53,7 +53,7 @@ const updateCategoriesService = (id, payload) => __awaiter(void 0, void 0, void 
     }
     const result = yield prisma_1.default.category.update({
         where: {
-            id
+            id,
         },
         data: payload,
     });
@@ -64,7 +64,7 @@ exports.updateCategoriesService = updateCategoriesService;
 const deleteCategoryService = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield prisma_1.default.category.delete({
         where: {
-            id
+            id,
         },
     });
     return result;

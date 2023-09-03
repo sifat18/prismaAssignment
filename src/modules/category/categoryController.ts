@@ -3,7 +3,13 @@ import { Request, RequestHandler, Response } from "express";
 import catchAsync from "../../shared/catchAsync";
 import reponseFormat from "../../shared/responseFormat";
 import { Category } from "@prisma/client";
-import { createCategoriesService, deleteCategoryService, getAllCategories,getCategoryService, updateCategoriesService } from "./categoryService";
+import {
+  createCategoriesService,
+  deleteCategoryService,
+  getAllCategories,
+  getCategoryService,
+  updateCategoriesService,
+} from "./categoryService";
 
 // signup
 export const createCategories: RequestHandler = catchAsync(
@@ -11,7 +17,7 @@ export const createCategories: RequestHandler = catchAsync(
     const { ...categoriesData } = req.body;
 
     const result = await createCategoriesService(categoriesData);
-   
+
     reponseFormat<Category>(res, {
       success: true,
       statusCode: 200,
@@ -26,7 +32,7 @@ export const getCategories: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
     const result = await getAllCategories();
 
-    reponseFormat<Category>(res, {
+    reponseFormat<Category[]>(res, {
       statusCode: 200,
       success: true,
       message: "Categories fetched successfully",
@@ -50,29 +56,33 @@ export const getCategory: RequestHandler = catchAsync(
 );
 
 // update
-  export const updateCategories = catchAsync(async (req: Request, res: Response) => {
+export const updateCategories = catchAsync(
+  async (req: Request, res: Response) => {
     const { id } = req.params;
     const updatedData = req.body;
-  
+
     const result = await updateCategoriesService(id, updatedData);
-  
+
     reponseFormat<Category>(res, {
       statusCode: 200,
       success: true,
       message: "Category updated successfully",
       data: result,
     });
-  });
+  }
+);
 
-  export const deleteCategories = catchAsync(async (req: Request, res: Response) => {
+export const deleteCategories = catchAsync(
+  async (req: Request, res: Response) => {
     const { id } = req.params;
-  
+
     const result = await deleteCategoryService(id);
-  
+
     reponseFormat<Category>(res, {
       statusCode: 200,
       success: true,
       message: "Category deleted successfully",
       data: result,
     });
-  });
+  }
+);
