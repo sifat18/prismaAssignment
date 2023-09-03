@@ -171,3 +171,14 @@ export const getBooksbyCategoryService = async (
       data: result,
     };
   };
+  
+  // get 1
+export const getBooksbyIdService = async (id:string): Promise<Book | null> => {
+ 
+    const result = await prisma.book.findUnique({
+        where: {
+        id:id
+    }
+});
+    return result;
+};
