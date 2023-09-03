@@ -1,6 +1,7 @@
 import { Request, RequestHandler, Response } from "express";
 import catchAsync from "../../shared/catchAsync";
 import {
+    deleteUserService,
   getAllUserService, getSingleUserService, updateUserService,
 } from "./userService";
 import reponseFormat from "../../shared/responseFormat";
@@ -46,5 +47,18 @@ export const updateUser = catchAsync(async (req: Request, res: Response) => {
       success: true,
       message: "User updated successfully",
       data: result,
+    });
+  });
+
+  export const deleteUser = catchAsync(async (req: Request, res: Response) => {
+    const { id } = req.params;
+  
+    const result = await deleteUserService(id);
+  
+    reponseFormat<{}>(res, {
+      statusCode: 200,
+      success: true,
+      message: "Uers deleted successfully",
+      data: {},
     });
   });
