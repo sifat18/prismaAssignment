@@ -24,7 +24,6 @@ export const getAllUser: RequestHandler = catchAsync(
 // single user
 export const getSingleUser = catchAsync(async (req: Request, res: Response) => {
     const { id } = req.params;
-  console.log({id})
     const result = await getSingleUserService(id);
   
     reponseFormat<Partial<User>>(res, {
