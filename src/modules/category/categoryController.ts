@@ -3,7 +3,7 @@ import { Request, RequestHandler, Response } from "express";
 import catchAsync from "../../shared/catchAsync";
 import reponseFormat from "../../shared/responseFormat";
 import { Category } from "@prisma/client";
-import { createCategoriesService, getAllCategories,getCategoryService, updateCategoriesService } from "./categoryService";
+import { createCategoriesService, deleteCategoryService, getAllCategories,getCategoryService, updateCategoriesService } from "./categoryService";
 
 // signup
 export const createCategories: RequestHandler = catchAsync(
@@ -60,6 +60,19 @@ export const getCategory: RequestHandler = catchAsync(
       statusCode: 200,
       success: true,
       message: "Category updated successfully",
+      data: result,
+    });
+  });
+
+  export const deleteCategories = catchAsync(async (req: Request, res: Response) => {
+    const { id } = req.params;
+  
+    const result = await deleteCategoryService(id);
+  
+    reponseFormat<Category>(res, {
+      statusCode: 200,
+      success: true,
+      message: "Category deleted successfully",
       data: result,
     });
   });
