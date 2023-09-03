@@ -202,3 +202,14 @@ export const getBooksbyIdService = async (id:string): Promise<Book | null> => {
     });
     return result;
   };
+
+     // delete
+export const deleteBookService = async (id: string): Promise<Book | null> => {
+    const result = await prisma.book.delete({
+        where: {
+            id
+        },
+       
+    })
+    return result;
+  };

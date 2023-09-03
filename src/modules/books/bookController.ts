@@ -3,7 +3,7 @@ import { Request, RequestHandler, Response } from "express";
 import catchAsync from "../../shared/catchAsync";
 import reponseFormat from "../../shared/responseFormat";
 import { Book } from "@prisma/client";
-import { createBookService, getAllBooks, getBooksbyCategoryService,getBooksbyIdService, updateBooksbyIdService } from "./bookService";
+import { createBookService, deleteBookService, getAllBooks, getBooksbyCategoryService,getBooksbyIdService, updateBooksbyIdService } from "./bookService";
 import pick from "../../shared/pick";
 import { bookFilterableFields } from "./bookConstant";
 
@@ -85,3 +85,16 @@ export const updateBook: RequestHandler = catchAsync(
       });
     }
   );
+
+  export const deleteBook = catchAsync(async (req: Request, res: Response) => {
+    const { id } = req.params;
+  
+    const result = await deleteBookService(id);
+  
+    reponseFormat<Book>(res, {
+      statusCode: 200,
+      success: true,
+      message: "Book is deleted successfully",
+      data: result,
+    });
+  });
