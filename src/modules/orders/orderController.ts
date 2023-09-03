@@ -4,7 +4,7 @@ import catchAsync from "../../shared/catchAsync";
 import reponseFormat from "../../shared/responseFormat";
 import pick from "../../shared/pick";
 import { Order } from "@prisma/client";
-import { createOrderService } from "./orderService";
+import { createOrderService, getAllOrders } from "./orderService";
 
 // create
 export const createOrder: RequestHandler = catchAsync(
@@ -21,3 +21,17 @@ export const createOrder: RequestHandler = catchAsync(
     });
   }
 );
+
+// getorder
+export const getOrders: RequestHandler = catchAsync(
+    async (req: Request, res: Response) => {
+      const result = await getAllOrders();
+  
+      reponseFormat<Partial<Order[]>>(res, {
+        statusCode: 200,
+        success: true,
+        message: "Orders retrieved successfully",
+        data: result,
+      });
+    }
+  );

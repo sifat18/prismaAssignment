@@ -17,7 +17,7 @@ export const createOrderService = async (order: Order, userId: string): Promise<
       });
   
       if (!user) {
-        throw new Error(`User with ID ${userId} not found.`);
+        throw new APIError(404, "User not found !");
       }
   
       // Create the order
@@ -31,7 +31,12 @@ export const createOrderService = async (order: Order, userId: string): Promise<
       return result;
     } catch (error) {
       console.error('Error creating order:', error);
-      throw new Error('Failed to create the order.');
+      throw new APIError(404, "faield to create Order !");
     }
   };
   
+  // getting all
+export const getAllOrders = async (): Promise<Order[] | null> => {
+    const result = await prisma.order.findMany({  });
+  return result;
+}
