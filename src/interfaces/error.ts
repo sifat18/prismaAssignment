@@ -13,7 +13,7 @@ export type IGenericErrorMessage = {
     meta: {
       page: number;
       limit: number;
-      count?: number;
+      total?: number;
     };
     data: T;
   };

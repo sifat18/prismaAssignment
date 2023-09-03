@@ -3,7 +3,9 @@ import { Request, RequestHandler, Response } from "express";
 import catchAsync from "../../shared/catchAsync";
 import reponseFormat from "../../shared/responseFormat";
 import { Book } from "@prisma/client";
-import { createBookService } from "./bookService";
+import { createBookService, getAllBooks } from "./bookService";
+import pick from "../../shared/pick";
+import { bookFilterableFields } from "./bookConstant";
 
 // create
 export const createBook: RequestHandler = catchAsync(
@@ -20,3 +22,21 @@ export const createBook: RequestHandler = catchAsync(
     });
   }
 );
+
+// all books
+export const getBooks: RequestHandler = catchAsync(
+    async (req: Request, res: Response) => {
+    const options = pick(req.query, ['limit', 'page', 'sortBy', 'sortOrder']);
+    const filters = pick(req.query, bookFilterableFields);
+   
+ const result = await getAllBooks(filters,options);
+  
+      reponseFormat<Book[]>(res, {
+        statusCode: 200,
+        success: true,
+        message: "Books fetched successfully",
+        meta: result.meta,
+        data: result.data
+      });
+    }
+  );
