@@ -3,7 +3,7 @@ import { Request, RequestHandler, Response } from "express";
 import catchAsync from "../../shared/catchAsync";
 import reponseFormat from "../../shared/responseFormat";
 import { Book } from "@prisma/client";
-import { createBookService, getAllBooks, getBooksbyCategoryService,getBooksbyIdService } from "./bookService";
+import { createBookService, getAllBooks, getBooksbyCategoryService,getBooksbyIdService, updateBooksbyIdService } from "./bookService";
 import pick from "../../shared/pick";
 import { bookFilterableFields } from "./bookConstant";
 
@@ -66,6 +66,21 @@ export const getBooksbyId: RequestHandler = catchAsync(
         statusCode: 200,
         success: true,
         message: "Book fetched successfully",
+        data: result
+      });
+    }
+  );
+// all books by category
+export const updateBook: RequestHandler = catchAsync(
+    async (req: Request, res: Response) => {
+        const { id } = req.params;
+        const updatedData = req.body;
+ const result = await updateBooksbyIdService(id,updatedData);
+  
+      reponseFormat<Book>(res, {
+        statusCode: 200,
+        success: true,
+        message: "Book updated successfully",
         data: result
       });
     }

@@ -182,3 +182,23 @@ export const getBooksbyIdService = async (id:string): Promise<Book | null> => {
 });
     return result;
 };
+  // update
+  export const updateBooksbyIdService = async (
+    id: string,
+    payload: Book
+  ): Promise<Book | null> => {
+    const isExist = await getBooksbyIdService(id);
+  
+    if (!isExist) {
+      throw new APIError(404, "Book not found !");
+    }
+  
+    const result = await prisma.book.update({
+        where: {
+            id
+        },
+        data: payload,
+       
+    });
+    return result;
+  };
