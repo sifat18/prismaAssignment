@@ -4,7 +4,7 @@ import catchAsync from "../../shared/catchAsync";
 import reponseFormat from "../../shared/responseFormat";
 import pick from "../../shared/pick";
 import { Order } from "@prisma/client";
-import { createOrderService, getAllOrders, getOrdersByUser } from "./orderService";
+import { createOrderService, getAllOrders,  getOrdersByIdService, getOrdersByUser } from "./orderService";
 
 // create
 export const createOrder: RequestHandler = catchAsync(
@@ -44,18 +44,18 @@ if(req.user?.role==='admin'){
     }
   );
 
-// // getorder
-// export const getOrdersForCustomers: RequestHandler = catchAsync(
-//     async (req: Request, res: Response) => {
-//     const {userId}=req.user!
-
-//       const result = await getOrdersByUser(userId);
+// getorder
+export const getOrdersbyId: RequestHandler = catchAsync(
+    async (req: Request, res: Response) => {
+    const {userId,role}=req.user!
+const {orderId}=req.params
+      const result = await getOrdersByIdService(userId,role,orderId);
   
-//       reponseFormat<Order[]>(res, {
-//         statusCode: 200,
-//         success: true,
-//         message: "Orders retrieved successfully",
-//         data: result,
-//       });
-//     }
-//   );
+      reponseFormat<Order>(res, {
+        statusCode: 200,
+        success: true,
+        message: "Orders retrieved successfully",
+        data: result,
+      });
+    }
+  );
