@@ -40,3 +40,10 @@ export const getAllOrders = async (): Promise<Order[] | null> => {
     const result = await prisma.order.findMany({  });
   return result;
 }
+  // getting all
+export const getOrdersByUser = async (id:string): Promise<Order[] | null> => {
+    const result = await prisma.order.findMany({ 
+      where:  {userId:id},
+     });
+  return result;
+}

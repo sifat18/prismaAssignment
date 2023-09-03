@@ -4,7 +4,7 @@ import catchAsync from "../../shared/catchAsync";
 import reponseFormat from "../../shared/responseFormat";
 import pick from "../../shared/pick";
 import { Order } from "@prisma/client";
-import { createOrderService, getAllOrders } from "./orderService";
+import { createOrderService, getAllOrders, getOrdersByUser } from "./orderService";
 
 // create
 export const createOrder: RequestHandler = catchAsync(
@@ -25,9 +25,17 @@ export const createOrder: RequestHandler = catchAsync(
 // getorder
 export const getOrders: RequestHandler = catchAsync(
     async (req: Request, res: Response) => {
-      const result = await getAllOrders();
+        const {userId}=req.user!
+        let result;
+if(req.user?.role==='admin'){
+     result = await getAllOrders();
+
+}else{
+     result = await getOrdersByUser(userId);
+}
+
   
-      reponseFormat<Partial<Order[]>>(res, {
+      reponseFormat<Order[]>(res, {
         statusCode: 200,
         success: true,
         message: "Orders retrieved successfully",
@@ -35,3 +43,19 @@ export const getOrders: RequestHandler = catchAsync(
       });
     }
   );
+
+// // getorder
+// export const getOrdersForCustomers: RequestHandler = catchAsync(
+//     async (req: Request, res: Response) => {
+//     const {userId}=req.user!
+
+//       const result = await getOrdersByUser(userId);
+  
+//       reponseFormat<Order[]>(res, {
+//         statusCode: 200,
+//         success: true,
+//         message: "Orders retrieved successfully",
+//         data: result,
+//       });
+//     }
+//   );

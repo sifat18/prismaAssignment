@@ -5,6 +5,6 @@ import { createOrder,getOrders } from "./orderController";
 
 const router = express.Router();
 router.post("/orders/create-order", auth("customer"), createOrder);
-router.get("/orders", auth("admin"), getOrders);
+router.get("/orders", auth("admin","customer"), getOrders);
 
 export const OrderRoutes = router;
