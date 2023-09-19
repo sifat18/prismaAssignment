@@ -44,11 +44,11 @@ export const loginUser: RequestHandler = catchAsync(
     };
 
     res.cookie("refreshToken", refreshToken, cookieOptions);
-    reponseFormat<ILoginUserResponse>(res, {
+    reponseFormat<String>(res, {
       success: true,
       statusCode: 200,
       message: "User signin successfully!",
-      data: others,
+      token: others.token,
     });
   }
 );
