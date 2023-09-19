@@ -12,6 +12,12 @@ type IApiData<T> = {
     count?: number;
   };
 };
+type IAuthData<T> = {
+  statusCode: number;
+  success: boolean;
+  message?: string | null;
+  token?: T | null;
+};
 export const reponseFormat = <T>(res: Response, data: IApiData<T>): void => {
   const responseData: IApiData<T> = {
     statusCode: data.statusCode,
@@ -26,9 +32,9 @@ export const reponseFormat = <T>(res: Response, data: IApiData<T>): void => {
 };
 export const reponseAuthFormat = <T>(
   res: Response,
-  data: IApiData<T>
+  data: IAuthData<T>
 ): void => {
-  const responseData: IApiData<T> = {
+  const responseData: IAuthData<T> = {
     statusCode: data.statusCode,
     success: data.success,
     message: data.message || null,
