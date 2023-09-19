@@ -5,7 +5,6 @@ type IApiData<T> = {
   success: boolean;
   message?: string | null;
   data?: T | null;
-  token?: T | null;
   meta?: {
     page: number;
     limit: number;
@@ -24,7 +23,6 @@ export const reponseFormat = <T>(res: Response, data: IApiData<T>): void => {
     success: data.success,
     message: data.message || null,
     data: data.data || null,
-    token: data.token || null,
     meta: data.meta || null || undefined,
   };
 
