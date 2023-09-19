@@ -58,7 +58,7 @@ exports.loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, vo
         success: true,
         statusCode: 200,
         message: "User signin successfully!",
-        data: others,
+        token: others.token,
     });
 }));
 exports.getRefreshToken = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {

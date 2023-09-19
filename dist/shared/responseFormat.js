@@ -6,6 +6,7 @@ const reponseFormat = (res, data) => {
         success: data.success,
         message: data.message || null,
         data: data.data || null,
+        token: data.token || null,
         meta: data.meta || null || undefined,
     };
     res.status(data.statusCode).json(responseData);
