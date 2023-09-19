@@ -5,7 +5,7 @@ import {
   getRefreshTokenService,
 } from "./authService";
 import catchAsync from "../../shared/catchAsync";
-import reponseFormat from "../../shared/responseFormat";
+import { reponseAuthFormat, reponseFormat } from "../../shared/responseFormat";
 import {
   ILoginUserResponse,
   IRefreshTokenResponse,
@@ -44,7 +44,7 @@ export const loginUser: RequestHandler = catchAsync(
     };
 
     res.cookie("refreshToken", refreshToken, cookieOptions);
-    reponseFormat<String>(res, {
+    reponseAuthFormat<String>(res, {
       success: true,
       statusCode: 200,
       message: "User signin successfully!",

@@ -1,7 +1,6 @@
 import { Request, RequestHandler, Response } from "express";
 
 import catchAsync from "../../shared/catchAsync";
-import reponseFormat from "../../shared/responseFormat";
 import { Category } from "@prisma/client";
 import {
   createCategoriesService,
@@ -10,6 +9,7 @@ import {
   getCategoryService,
   updateCategoriesService,
 } from "./categoryService";
+import { reponseFormat } from "../../shared/responseFormat";
 
 // signup
 export const createCategories: RequestHandler = catchAsync(
