@@ -25,14 +25,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getOrdersbyId = exports.getOrders = exports.createOrder = void 0;
 const catchAsync_1 = __importDefault(require("../../shared/catchAsync"));
-const responseFormat_1 = __importDefault(require("../../shared/responseFormat"));
 const orderService_1 = require("./orderService");
+const responseFormat_1 = require("../../shared/responseFormat");
 // create
 exports.createOrder = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const orderData = __rest(req.body, []);
     const { userId } = req.user;
     const result = yield (0, orderService_1.createOrderService)(orderData, userId);
-    (0, responseFormat_1.default)(res, {
+    (0, responseFormat_1.reponseFormat)(res, {
         success: true,
         statusCode: 200,
         message: "Order created successfully",
@@ -44,13 +44,13 @@ exports.getOrders = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, vo
     var _a;
     const { userId } = req.user;
     let result;
-    if (((_a = req.user) === null || _a === void 0 ? void 0 : _a.role) === 'admin') {
+    if (((_a = req.user) === null || _a === void 0 ? void 0 : _a.role) === "admin") {
         result = yield (0, orderService_1.getAllOrders)();
     }
     else {
         result = yield (0, orderService_1.getOrdersByUser)(userId);
     }
-    (0, responseFormat_1.default)(res, {
+    (0, responseFormat_1.reponseFormat)(res, {
         statusCode: 200,
         success: true,
         message: "Orders retrieved successfully",
@@ -62,7 +62,7 @@ exports.getOrdersbyId = (0, catchAsync_1.default)((req, res) => __awaiter(void 0
     const { userId, role } = req.user;
     const { orderId } = req.params;
     const result = yield (0, orderService_1.getOrdersByIdService)(userId, role, orderId);
-    (0, responseFormat_1.default)(res, {
+    (0, responseFormat_1.reponseFormat)(res, {
         statusCode: 200,
         success: true,
         message: "Order fetched successfully",

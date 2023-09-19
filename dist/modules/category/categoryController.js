@@ -25,13 +25,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteCategories = exports.updateCategories = exports.getCategory = exports.getCategories = exports.createCategories = void 0;
 const catchAsync_1 = __importDefault(require("../../shared/catchAsync"));
-const responseFormat_1 = __importDefault(require("../../shared/responseFormat"));
 const categoryService_1 = require("./categoryService");
+const responseFormat_1 = require("../../shared/responseFormat");
 // signup
 exports.createCategories = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const categoriesData = __rest(req.body, []);
     const result = yield (0, categoryService_1.createCategoriesService)(categoriesData);
-    (0, responseFormat_1.default)(res, {
+    (0, responseFormat_1.reponseFormat)(res, {
         success: true,
         statusCode: 200,
         message: "Category created successfully !",
@@ -41,7 +41,7 @@ exports.createCategories = (0, catchAsync_1.default)((req, res) => __awaiter(voi
 // all Category
 exports.getCategories = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield (0, categoryService_1.getAllCategories)();
-    (0, responseFormat_1.default)(res, {
+    (0, responseFormat_1.reponseFormat)(res, {
         statusCode: 200,
         success: true,
         message: "Categories fetched successfully",
@@ -52,7 +52,7 @@ exports.getCategories = (0, catchAsync_1.default)((req, res) => __awaiter(void 0
 exports.getCategory = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const result = yield (0, categoryService_1.getCategoryService)(id);
-    (0, responseFormat_1.default)(res, {
+    (0, responseFormat_1.reponseFormat)(res, {
         statusCode: 200,
         success: true,
         message: "Category fetched successfully",
@@ -64,7 +64,7 @@ exports.updateCategories = (0, catchAsync_1.default)((req, res) => __awaiter(voi
     const { id } = req.params;
     const updatedData = req.body;
     const result = yield (0, categoryService_1.updateCategoriesService)(id, updatedData);
-    (0, responseFormat_1.default)(res, {
+    (0, responseFormat_1.reponseFormat)(res, {
         statusCode: 200,
         success: true,
         message: "Category updated successfully",
@@ -74,7 +74,7 @@ exports.updateCategories = (0, catchAsync_1.default)((req, res) => __awaiter(voi
 exports.deleteCategories = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const result = yield (0, categoryService_1.deleteCategoryService)(id);
-    (0, responseFormat_1.default)(res, {
+    (0, responseFormat_1.reponseFormat)(res, {
         statusCode: 200,
         success: true,
         message: "Category deleted successfully",

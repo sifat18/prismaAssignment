@@ -25,15 +25,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteBook = exports.updateBook = exports.getBooksbyId = exports.getBooksbyCategory = exports.getBooks = exports.createBook = void 0;
 const catchAsync_1 = __importDefault(require("../../shared/catchAsync"));
-const responseFormat_1 = __importDefault(require("../../shared/responseFormat"));
 const bookService_1 = require("./bookService");
 const pick_1 = __importDefault(require("../../shared/pick"));
 const bookConstant_1 = require("./bookConstant");
+const responseFormat_1 = require("../../shared/responseFormat");
 // create
 exports.createBook = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const bookData = __rest(req.body, []);
     const result = yield (0, bookService_1.createBookService)(bookData);
-    (0, responseFormat_1.default)(res, {
+    (0, responseFormat_1.reponseFormat)(res, {
         success: true,
         statusCode: 200,
         message: "Book created successfully",
@@ -42,39 +42,39 @@ exports.createBook = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
 }));
 // all books
 exports.getBooks = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const options = (0, pick_1.default)(req.query, ['limit', 'page', 'sortBy', 'sortOrder']);
+    const options = (0, pick_1.default)(req.query, ["limit", "page", "sortBy", "sortOrder"]);
     const filters = (0, pick_1.default)(req.query, bookConstant_1.bookFilterableFields);
     const result = yield (0, bookService_1.getAllBooks)(filters, options);
-    (0, responseFormat_1.default)(res, {
+    (0, responseFormat_1.reponseFormat)(res, {
         statusCode: 200,
         success: true,
         message: "Books fetched successfully",
         meta: result.meta,
-        data: result.data
+        data: result.data,
     });
 }));
 // all books by category
 exports.getBooksbyCategory = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { categoryId } = req.params;
-    const options = (0, pick_1.default)(req.query, ['limit', 'page']);
+    const options = (0, pick_1.default)(req.query, ["limit", "page"]);
     const result = yield (0, bookService_1.getBooksbyCategoryService)(categoryId, options);
-    (0, responseFormat_1.default)(res, {
+    (0, responseFormat_1.reponseFormat)(res, {
         statusCode: 200,
         success: true,
         message: "Books with associated category data fetched successfully",
         meta: result.meta,
-        data: result.data
+        data: result.data,
     });
 }));
 // all books by category
 exports.getBooksbyId = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const result = yield (0, bookService_1.getBooksbyIdService)(id);
-    (0, responseFormat_1.default)(res, {
+    (0, responseFormat_1.reponseFormat)(res, {
         statusCode: 200,
         success: true,
         message: "Book fetched successfully",
-        data: result
+        data: result,
     });
 }));
 // all books by category
@@ -82,17 +82,17 @@ exports.updateBook = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
     const { id } = req.params;
     const updatedData = req.body;
     const result = yield (0, bookService_1.updateBooksbyIdService)(id, updatedData);
-    (0, responseFormat_1.default)(res, {
+    (0, responseFormat_1.reponseFormat)(res, {
         statusCode: 200,
         success: true,
         message: "Book updated successfully",
-        data: result
+        data: result,
     });
 }));
 exports.deleteBook = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const result = yield (0, bookService_1.deleteBookService)(id);
-    (0, responseFormat_1.default)(res, {
+    (0, responseFormat_1.reponseFormat)(res, {
         statusCode: 200,
         success: true,
         message: "Book is deleted successfully",

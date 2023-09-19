@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.reponseAuthFormat = exports.reponseFormat = void 0;
 const reponseFormat = (res, data) => {
     const responseData = {
         statusCode: data.statusCode,
@@ -11,4 +12,14 @@ const reponseFormat = (res, data) => {
     };
     res.status(data.statusCode).json(responseData);
 };
-exports.default = reponseFormat;
+exports.reponseFormat = reponseFormat;
+const reponseAuthFormat = (res, data) => {
+    const responseData = {
+        statusCode: data.statusCode,
+        success: data.success,
+        message: data.message || null,
+        token: data.token || null,
+    };
+    res.status(data.statusCode).json(responseData);
+};
+exports.reponseAuthFormat = reponseAuthFormat;

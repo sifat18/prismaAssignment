@@ -15,11 +15,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getProfile = exports.deleteUser = exports.updateUser = exports.getSingleUser = exports.getAllUser = void 0;
 const catchAsync_1 = __importDefault(require("../../shared/catchAsync"));
 const userService_1 = require("./userService");
-const responseFormat_1 = __importDefault(require("../../shared/responseFormat"));
+const responseFormat_1 = require("../../shared/responseFormat");
 // all user
 exports.getAllUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield (0, userService_1.getAllUserService)();
-    (0, responseFormat_1.default)(res, {
+    (0, responseFormat_1.reponseFormat)(res, {
         statusCode: 200,
         success: true,
         message: "Users retrieved successfully",
@@ -30,7 +30,7 @@ exports.getAllUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
 exports.getSingleUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const result = yield (0, userService_1.getSingleUserService)(id);
-    (0, responseFormat_1.default)(res, {
+    (0, responseFormat_1.reponseFormat)(res, {
         statusCode: 200,
         success: true,
         message: "User getched successfully",
@@ -42,7 +42,7 @@ exports.updateUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
     const { id } = req.params;
     const updatedData = req.body;
     const result = yield (0, userService_1.updateUserService)(id, updatedData);
-    (0, responseFormat_1.default)(res, {
+    (0, responseFormat_1.reponseFormat)(res, {
         statusCode: 200,
         success: true,
         message: "User updated successfully",
@@ -52,7 +52,7 @@ exports.updateUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
 exports.deleteUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const result = yield (0, userService_1.deleteUserService)(id);
-    (0, responseFormat_1.default)(res, {
+    (0, responseFormat_1.reponseFormat)(res, {
         statusCode: 200,
         success: true,
         message: "Uers deleted successfully",
@@ -63,7 +63,7 @@ exports.deleteUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
 exports.getProfile = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { userId } = req.user;
     const result = yield (0, userService_1.getSingleUserService)(userId);
-    (0, responseFormat_1.default)(res, {
+    (0, responseFormat_1.reponseFormat)(res, {
         statusCode: 200,
         success: true,
         message: "Profile retrieved successfully",

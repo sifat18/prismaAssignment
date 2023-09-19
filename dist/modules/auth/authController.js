@@ -26,7 +26,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getRefreshToken = exports.loginUser = exports.createUser = void 0;
 const authService_1 = require("./authService");
 const catchAsync_1 = __importDefault(require("../../shared/catchAsync"));
-const responseFormat_1 = __importDefault(require("../../shared/responseFormat"));
+const responseFormat_1 = require("../../shared/responseFormat");
 // signup
 exports.createUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const userData = __rest(req.body, []);
@@ -36,7 +36,7 @@ exports.createUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
         const { password } = result, rest = __rest(result, ["password"]);
         dataWithoutPass = rest;
     }
-    (0, responseFormat_1.default)(res, {
+    (0, responseFormat_1.reponseFormat)(res, {
         success: true,
         statusCode: 200,
         message: "User created successfully !",
@@ -54,7 +54,7 @@ exports.loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, vo
         httpOnly: true,
     };
     res.cookie("refreshToken", refreshToken, cookieOptions);
-    (0, responseFormat_1.default)(res, {
+    (0, responseFormat_1.reponseAuthFormat)(res, {
         success: true,
         statusCode: 200,
         message: "User signin successfully!",
@@ -70,7 +70,7 @@ exports.getRefreshToken = (0, catchAsync_1.default)((req, res) => __awaiter(void
         httpOnly: true,
     };
     res.cookie("refreshToken", refreshToken, cookieOptions);
-    (0, responseFormat_1.default)(res, {
+    (0, responseFormat_1.reponseFormat)(res, {
         statusCode: 200,
         success: true,
         message: "New access token generated successfully !",
